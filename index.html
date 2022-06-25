@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Lets play cricket!</title>
+  </head>
+  <body>
+    <header>
+      <h1 class="status">Lets play cricket!</h1>
+      <!-- <p class="between">(Between 1 and 20)</p> -->
+      <button class="newBtn again">New Game!</button>
+      <button onclick="bat()" class="btn1 bat">Bat</button>
+      <button class="btn2 bowl">Bowl</button>
+      <div class="number">?</div>
+    </header>
+    <main>
+      <section class="left">
+        <input type="number" class="guess hidden" />
+        <button onclick="strike()" class="playBat play hidden">
+          Your strike
+        </button>
+        <button ondblclick="initiate()" class="prepare play hidden">
+          Double click to Bowl
+        </button>
+        <button onclick="delivery()" class="playBowl play hidden">
+          Your delivery
+        </button>
+      </section>
+      <section class="right">
+        <p class="message">Lets play</p>
+        <p class="label-score">💯 Score: <span class="score">0</span></p>
+        <p class="label-highscore">🥇 Target: <span class="target">0</span></p>
+        <p class="label-highscore2 hidden">
+          🥇 Target2: <span class="target2">0</span>
+        </p>
+        <p class="label-count">Balls remaining: <span class="balls"></span></p>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
