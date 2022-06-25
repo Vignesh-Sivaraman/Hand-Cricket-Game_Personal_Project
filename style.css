@@ -14,8 +14,10 @@ html {
 body {
   font-family: "Press Start 2P", sans-serif;
   color: #eee;
-  background-color: rgb(34, 34, 34);
+  background-color: #1d8daf;
   /* background-color: #60b347; */
+  /* background-color: #c94646; */
+  /* background-color: #6b7d8a; */
 }
 header {
   position: relative;
@@ -35,8 +37,13 @@ h1 {
 
 .newBtn,
 .playBat,
+.playBat2,
 .playBowl,
-.prepare {
+.playBowl2,
+.prepareBowl,
+.prepareBat,
+.secondaryBowl,
+.secondaryBat {
   border: none;
   background-color: #eee;
   color: #222;
@@ -138,4 +145,8 @@ main {
 
 .label-count {
   margin-top: 2rem;
+}
+
+.hidden {
+  display: none;
 }
