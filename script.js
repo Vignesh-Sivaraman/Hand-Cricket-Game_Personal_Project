@@ -1,4 +1,6 @@
 "use strict";
+
+const toss = document.querySelector(".btn3");
 const btn1 = document.querySelector(".btn1");
 const btn2 = document.querySelector(".btn2");
 const newGame = document.querySelector(".btn");
@@ -11,12 +13,15 @@ const secondBowl = document.querySelector(".secondaryBowl");
 const secondBat = document.querySelector(".secondaryBat");
 const bowling2 = document.querySelector(".playBowl2");
 const batting2 = document.querySelector(".playBat2");
+let coin = document.querySelector(".coin");
+let flipBtn = document.querySelector("#flip-button");
 
 let overs = 1;
 let balls = overs * 6;
 let score = 0;
 let target = 0;
 let start = true;
+let tossStatus = [];
 
 const displayMessage = function (message) {
   document.querySelector(".message").textContent = message;
@@ -33,20 +38,130 @@ function displayButtons() {
 }
 
 document.querySelector(".newBtn").addEventListener("click", function () {
-  displayButtons();
-  document.querySelector(".guess").value = "";
-  document.querySelector(".score").textContent = 0;
-  document.querySelector(".number").textContent = "?";
-  document.querySelector(".target").textContent = 0;
-  document.querySelector(".status").textContent = "Let's Play cricket";
-  document.querySelector(".guess").classList.remove("hidden");
   document.location.reload();
 });
+
+function tossSelector() {
+  // document.querySelector(".newBtn").classList.add("hidden");
+  toss.classList.add("hidden");
+  document.querySelector(".status").textContent = "Choose Heads or Tails";
+  document.querySelector(".btn4").classList.remove("hidden");
+  document.querySelector(".btn5").classList.remove("hidden");
+  // document.querySelector(".forToss").classList.remove("hidden");
+}
+
+function heads() {
+  document.querySelector(".btn4").classList.add("hidden");
+  document.querySelector(".btn5").classList.add("hidden");
+  document.querySelector(".status").textContent = "You chose Heads, Flip coin";
+  document.querySelector(".forToss").classList.remove("hidden");
+}
+
+function tails() {
+  document.querySelector(".btn4").classList.add("hidden");
+  document.querySelector(".btn5").classList.add("hidden");
+  document.querySelector(".status").textContent = "You chose Tails, Flip coin";
+  document.querySelector(".forToss").classList.remove("hidden");
+}
+flipBtn.addEventListener("click", () => {
+  console.log(tossStatus);
+  let i = Math.floor(Math.random() * 2);
+  coin.style.animation = "none";
+  let userToss = document.querySelector(".status").textContent;
+  if (userToss === "You chose Heads, Flip coin" && i === 1) {
+    setTimeout(function () {
+      coin.style.animation = "spin-heads 3s forwards";
+    }, 100);
+    tossStatus.push("You won the toss");
+  } else if (userToss === "You chose Tails, Flip coin" && i === 0) {
+    setTimeout(function () {
+      coin.style.animation = "spin-tails 3s forwards";
+    }, 100);
+    tossStatus.push("You won the toss");
+  } else if (userToss === "You chose Heads, Flip coin" && i === 0) {
+    setTimeout(function () {
+      coin.style.animation = "spin-tails 3s forwards";
+    }, 100);
+    tossStatus.push("You lost the toss");
+  } else if (userToss === "You chose Tails, Flip coin" && i === 1) {
+    setTimeout(function () {
+      coin.style.animation = "spin-heads 3s forwards";
+    }, 100);
+    tossStatus.push("You lost the toss");
+  }
+  setTimeout(updateStats, 3000);
+  console.log(tossStatus);
+  // disableButton();
+});
+
+function updateStats() {
+  document.querySelector(".status").textContent = tossStatus[0];
+  if (tossStatus[0] === "You won the toss") {
+    document.querySelector(".forToss").classList.add("hidden");
+    displayButtons();
+    document.querySelector(".status").textContent =
+      "You won the toss, Choose Bat or Bowl";
+  } else {
+    let j = Math.floor(Math.random() * 2);
+    if (j) {
+      document.querySelector(".status").textContent =
+        "You lost the toss, I choose to Bat";
+      secondBowl.classList.remove("hidden");
+      document.querySelector(".guess").value = "";
+      document.querySelector(".score").textContent = 0;
+      document.querySelector(".number").textContent = "?";
+      document.querySelector(".target").textContent = 0;
+      document.querySelector(".left").classList.remove("hidden");
+      userValue.classList.add("hidden");
+      document.querySelector(".label-score").classList.remove("hidden");
+      document.querySelector(".label-highscore").classList.remove("hidden");
+      document.querySelector(".label-count").classList.remove("hidden");
+      document.querySelector(".message").classList.remove("hidden");
+      document.querySelector(".forToss").classList.add("hidden");
+    } else {
+      document.querySelector(".status").textContent =
+        "You lost the toss, I choose to Bowl";
+      prepareBat.classList.remove("hidden");
+      document.querySelector(".guess").value = "";
+      document.querySelector(".score").textContent = 0;
+      document.querySelector(".number").textContent = "?";
+      document.querySelector(".target").textContent = 0;
+      document.querySelector(".label-score").classList.remove("hidden");
+      document.querySelector(".label-highscore").classList.remove("hidden");
+      document.querySelector(".label-count").classList.remove("hidden");
+      document.querySelector(".message").classList.remove("hidden");
+      document.querySelector(".forToss").classList.add("hidden");
+    }
+  }
+}
+
+console.log(tossStatus);
+
+// document.querySelector(".newBtn").addEventListener("click", function () {
+//   displayButtons();
+//   document.querySelector(".guess").value = "";
+//   document.querySelector(".score").textContent = 0;
+//   document.querySelector(".number").textContent = "?";
+//   document.querySelector(".target").textContent = 0;
+//   document.querySelector(".status").textContent = "Let's Play cricket";
+//   document.querySelector(".guess").classList.remove("hidden");
+//   document.location.reload();
+// });
 
 function bat() {
   document.querySelector(".status").textContent = "You chose to Bat";
   notDisplayButtons();
   prepareBat.classList.remove("hidden");
+  document.querySelector(".guess").value = "";
+  document.querySelector(".score").textContent = 0;
+  document.querySelector(".number").textContent = "?";
+  document.querySelector(".target").textContent = 0;
+  document.querySelector(".label-score").classList.remove("hidden");
+  document.querySelector(".label-highscore").classList.remove("hidden");
+  document.querySelector(".label-count").classList.remove("hidden");
+  document.querySelector(".message").classList.remove("hidden");
+  document.querySelector(".number").classList.remove("hidden");
+  document.querySelector("body").style.backgroundColor = "#1a1a1d";
 }
 
 function Batfirst() {
@@ -60,6 +175,8 @@ function Batfirst() {
   userValue.classList.remove("hidden");
   document.querySelector(".status").textContent = "You are batting";
   document.querySelector(".balls").textContent = balls;
+  document.querySelector(".number").classList.remove("hidden");
+  document.querySelector("body").style.backgroundColor = "#1a1a1d";
 }
 
 function strikefirst() {
@@ -109,6 +226,8 @@ function Bowlnext() {
   document.querySelector(".balls").textContent = balls; //|| balls < 1
   document.querySelector(".number").textContent = "?";
   document.querySelector(".status").textContent = "You are bowling";
+  document.querySelector(".guess").value = "";
+  document.querySelector("body").style.backgroundColor = "#1a1a1d";
 }
 
 function deliverynext() {
@@ -133,6 +252,7 @@ function deliverynext() {
     displayMessage("Next ball!!!");
     document.querySelector(".target").textContent = target;
     document.querySelector(".balls").textContent = balls;
+    document.querySelector(".score").textContent = score;
   }
   if (target <= 0) {
     document.querySelector("body").style.backgroundColor = "#c94646";
@@ -160,6 +280,18 @@ function bowl() {
   document.querySelector(".status").textContent = "You chose to Bowl";
   notDisplayButtons();
   secondBowl.classList.remove("hidden");
+  document.querySelector(".guess").value = "";
+  document.querySelector(".score").textContent = 0;
+  document.querySelector(".number").textContent = "?";
+  document.querySelector(".target").textContent = 0;
+  document.querySelector(".left").classList.remove("hidden");
+  userValue.classList.add("hidden");
+  document.querySelector(".label-score").classList.remove("hidden");
+  document.querySelector(".label-highscore").classList.remove("hidden");
+  document.querySelector(".label-count").classList.remove("hidden");
+  document.querySelector(".message").classList.remove("hidden");
+  document.querySelector(".number").classList.remove("hidden");
+  document.querySelector("body").style.backgroundColor = "#1a1a1d";
 }
 
 function Bowlfirst() {
@@ -173,6 +305,8 @@ function Bowlfirst() {
   userValue.classList.remove("hidden");
   document.querySelector(".status").textContent = "You are bowling";
   document.querySelector(".balls").textContent = balls;
+  document.querySelector(".number").classList.remove("hidden");
+  document.querySelector("body").style.backgroundColor = "#1a1a1d";
 }
 
 function deliveryfirst() {
@@ -220,6 +354,9 @@ function Batnext() {
   userValue.classList.remove("hidden");
   document.querySelector(".status").textContent = "You are batting";
   document.querySelector(".balls").textContent = balls;
+  document.querySelector(".guess").value = "";
+  document.querySelector(".number").textContent = "?";
+  document.querySelector("body").style.backgroundColor = "#1a1a1d";
 }
 
 function strikenext() {
